@@ -1,49 +1,52 @@
 import { randomUUID } from "crypto";
 import { Request, Response } from "express";
 import { NotFoundError } from "../helpers/api-errors";
-import { TasksRepository } from "../repository/taskRepository";
+import { UserRepository } from "../repository/UsersRepository";
 
-export class TasksController {
-  post(req: Request, res: Response) {
-    const { title, task } = req.body;
+const userRepository = new UserRepository();
 
-    const createTask = TasksRepository.create({
+export class UsersController {
+  async post(req: Request, res: Response) {
+    const { email, name, password } = req.body;
+
+    const createTask = await userRepository.create({
       id: randomUUID(),
-      title,
-      task,
+      email,
+      name,
+      password,
     });
 
     res.status(201).json(createTask);
   }
 
-  get(req: Request, res: Response) {
-    const allTasks = TasksRepository.findAll();
+  // get(req: Request, res: Response) {
+  //   const allTasks = TasksRepository.findAll();
 
-    res.json(allTasks);
-  }
+  //   res.json(allTasks);
+  // }
 
-  put(req: Request, res: Response) {
-    const { id } = req.params;
-    const { title, task } = req.body;
-    const taskFound = TasksRepository.findById(id);
+  // put(req: Request, res: Response) {
+  //   const { id } = req.params;
+  //   const { title, task } = req.body;
+  //   const taskFound = TasksRepository.findById(id);
 
-    if (!taskFound) {
-      throw new NotFoundError("Tarefa não encontrada");
-    }
+  //   if (!taskFound) {
+  //     throw new NotFoundError("Tarefa não encontrada");
+  //   }
 
-    const updatedTask = TasksRepository.update({ id, title, task });
-    res.json(updatedTask);
-  }
+  //   const updatedTask = TasksRepository.update({ id, title, task });
+  //   res.json(updatedTask);
+  // }
 
-  delete(req: Request, res: Response) {
-    const { id } = req.params;
-    const taskFound = TasksRepository.findById(id);
+  // delete(req: Request, res: Response) {
+  //   const { id } = req.params;
+  //   const taskFound = TasksRepository.findById(id);
 
-    if (!taskFound) {
-      throw new NotFoundError("Tarefa não encontrada");
-    }
+  //   if (!taskFound) {
+  //     throw new NotFoundError("Tarefa não encontrada");
+  //   }
 
-    TasksRepository.delete(id);
-    res.status(204).send();
-  }
+  //   TasksRepository.delete(id);
+  //   res.status(204).send();
+  // }
 }

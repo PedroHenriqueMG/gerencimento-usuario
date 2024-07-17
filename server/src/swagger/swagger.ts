@@ -1,5 +1,5 @@
 import { createDocument } from "zod-openapi";
-import { tasksBody, tasksGetAll, tasksSchema } from "../@types/tasksSchema";
+import { tasksBody, tasksGetAll, tasksSchema } from "../@types/UserSchema";
 
 export const document = createDocument({
   openapi: "3.1.0",
