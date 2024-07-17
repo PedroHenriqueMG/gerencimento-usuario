@@ -4,7 +4,7 @@ import { usersBody, usersGetAll, userSchema } from "../@types/UserSchema";
 export const document = createDocument({
   openapi: "3.1.0",
   info: {
-    title: "To-Do List API",
+    title: "Gerencimento Usuarios API",
     version: "1.0.0",
   },
   paths: {
