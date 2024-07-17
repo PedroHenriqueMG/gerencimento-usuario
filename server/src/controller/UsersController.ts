@@ -56,15 +56,15 @@ export class UsersController {
     res.json(updatedTask);
   }
 
-  // delete(req: Request, res: Response) {
-  //   const { id } = req.params;
-  //   const taskFound = TasksRepository.findById(id);
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    const taskFound = userRepository.findById(id);
 
-  //   if (!taskFound) {
-  //     throw new NotFoundError("Tarefa não encontrada");
-  //   }
+    if (!taskFound) {
+      throw new NotFoundError("Tarefa não encontrada");
+    }
 
-  //   TasksRepository.delete(id);
-  //   res.status(204).send();
-  // }
+    userRepository.delete(id);
+    res.status(204).send();
+  }
 }

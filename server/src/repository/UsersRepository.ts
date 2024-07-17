@@ -46,4 +46,8 @@ export class UserRepository implements IUserRepository {
 
     return result.rows[0];
   }
+
+  async delete(id: string): Promise<void> {
+    await db.query("DELETE FROM users WHERE id = $1 RETURNING id", [id]);
+  }
 }
