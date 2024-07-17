@@ -12,6 +12,6 @@ router.use("/docs", swaggerUi.serve);
 router.get("/docs", swaggerUi.setup(document));
 
 router.post("/tasks", validate(usersBody), new UsersController().post);
-// router.get("/tasks", new TasksController().get);
+router.get("/tasks", new UsersController().get);
 // router.put("/tasks/:id", validate(tasksBody), new TasksController().put);
 // router.delete("/tasks/:id", new TasksController().delete);

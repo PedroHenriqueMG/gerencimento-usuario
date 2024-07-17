@@ -25,11 +25,11 @@ export class UsersController {
     res.status(201).json(createTask);
   }
 
-  // get(req: Request, res: Response) {
-  //   const allTasks = TasksRepository.findAll();
+  async get(req: Request, res: Response) {
+    const allTasks = await userRepository.findAll();
 
-  //   res.json(allTasks);
-  // }
+    res.json(allTasks);
+  }
 
   // put(req: Request, res: Response) {
   //   const { id } = req.params;

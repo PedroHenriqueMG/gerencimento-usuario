@@ -20,4 +20,10 @@ export class UserRepository implements IUserRepository {
 
     return result.rows[0] || null;
   }
+
+  async findAll(): Promise<User[]> {
+    const result = await db.query("SELECT * FROM users");
+
+    return result.rows;
+  }
 }
