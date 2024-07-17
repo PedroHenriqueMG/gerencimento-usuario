@@ -1,5 +1,5 @@
 import { createDocument } from "zod-openapi";
-import { tasksBody, tasksGetAll, tasksSchema } from "../@types/UserSchema";
+import { usersBody, usersGetAll, userSchema } from "../@types/UserSchema";
 
 export const document = createDocument({
   openapi: "3.1.0",
@@ -8,12 +8,12 @@ export const document = createDocument({
     version: "1.0.0",
   },
   paths: {
-    "/tasks": {
+    "/users": {
       post: {
-        tags: ["Tasks"],
+        tags: ["Users"],
         requestBody: {
           content: {
-            "application/json": { schema: tasksBody },
+            "application/json": { schema: usersBody },
           },
         },
         responses: {
@@ -21,32 +21,32 @@ export const document = createDocument({
             description: "201 Created",
             content: {
               "application/json": {
-                schema: tasksSchema,
+                schema: userSchema,
               },
             },
           },
         },
       },
       get: {
-        tags: ["Tasks"],
+        tags: ["Users"],
         responses: {
           "200": {
             description: "200 OK",
             content: {
               "application/json": {
-                schema: tasksGetAll,
+                schema: usersGetAll,
               },
             },
           },
         },
       },
     },
-    "/tasks/{id}": {
+    "/users/{id}": {
       put: {
-        tags: ["Tasks"],
+        tags: ["Users"],
         requestBody: {
           content: {
-            "application/json": { schema: tasksBody },
+            "application/json": { schema: usersBody },
           },
         },
         responses: {
@@ -54,14 +54,14 @@ export const document = createDocument({
             description: "200 OK",
             content: {
               "application/json": {
-                schema: tasksSchema,
+                schema: userSchema,
               },
             },
           },
         },
       },
       delete: {
-        tags: ["Tasks"],
+        tags: ["Users"],
         responses: {
           "204": {
             description: "204 No Content",
