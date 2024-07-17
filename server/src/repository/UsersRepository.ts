@@ -26,4 +26,24 @@ export class UserRepository implements IUserRepository {
 
     return result.rows;
   }
+
+  async findById(id: string): Promise<User | null> {
+    const result = await db.query("SELECT * FROM users WHERE id = $1", [id]);
+
+    return result.rows[0] || null;
+  }
+
+  async update(user: User): Promise<User> {
+    const result = await db.query(
+      `UPDATE users SET 
+        name = COALESCE($1, name), 
+        email = COALESCE($2, email), 
+        password = COALESCE($3, password) 
+      WHERE id = $4 
+      RETURNING *`,
+      [user.name, user.email, user.password, user.id]
+    );
+
+    return result.rows[0];
+  }
 }

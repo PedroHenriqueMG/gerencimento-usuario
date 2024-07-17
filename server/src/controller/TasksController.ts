@@ -31,18 +31,30 @@ export class UsersController {
     res.json(allTasks);
   }
 
-  // put(req: Request, res: Response) {
-  //   const { id } = req.params;
-  //   const { title, task } = req.body;
-  //   const taskFound = TasksRepository.findById(id);
+  async put(req: Request, res: Response) {
+    const { id } = req.params;
+    const { email, name, password } = req.body;
+    const taskFound = await userRepository.findById(id);
 
-  //   if (!taskFound) {
-  //     throw new NotFoundError("Tarefa não encontrada");
-  //   }
+    if (!taskFound) {
+      throw new NotFoundError("Usuario não encontrado.");
+    }
 
-  //   const updatedTask = TasksRepository.update({ id, title, task });
-  //   res.json(updatedTask);
-  // }
+    const existEmail = await userRepository.findByEmail(email);
+
+    if (existEmail && existEmail.id != id) {
+      throw new BadRequestError("Email ja existente.");
+    }
+
+    const updatedTask = await userRepository.update({
+      id,
+      email,
+      name,
+      password,
+    });
+
+    res.json(updatedTask);
+  }
 
   // delete(req: Request, res: Response) {
   //   const { id } = req.params;
