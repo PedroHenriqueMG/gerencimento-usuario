@@ -7,8 +7,8 @@ export const userSchema = z.object({
   password: z.string(),
 });
 
-export const tasksBody = userSchema.omit({ id: true });
-export const tasksGetAll = z.array(userSchema);
+export const usersBody = userSchema.omit({ id: true });
+export const usersGetAll = z.array(userSchema);
 
 export type User = z.infer<typeof userSchema>;
 export type TasksBodyProps = z.infer<typeof userSchema>;

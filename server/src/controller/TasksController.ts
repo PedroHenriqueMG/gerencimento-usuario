@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import { Request, Response } from "express";
-import { NotFoundError } from "../helpers/api-errors";
+import { BadRequestError, NotFoundError } from "../helpers/api-errors";
 import { UserRepository } from "../repository/UsersRepository";
 
 const userRepository = new UserRepository();
@@ -8,6 +8,12 @@ const userRepository = new UserRepository();
 export class UsersController {
   async post(req: Request, res: Response) {
     const { email, name, password } = req.body;
+
+    const existUser = await userRepository.findByEmail(email);
+
+    if (existUser) {
+      throw new BadRequestError("Usuario ja existente.");
+    }
 
     const createTask = await userRepository.create({
       id: randomUUID(),
