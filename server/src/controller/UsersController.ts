@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { Request, Response } from "express";
 import { BadRequestError, NotFoundError } from "../helpers/api-errors";
 import { UserRepository } from "../repository/UsersRepository";
+import bcrypt from "bcrypt";
 
 const userRepository = new UserRepository();
 
@@ -15,11 +16,13 @@ export class UsersController {
       throw new BadRequestError("Usuario ja existente.");
     }
 
+    const hashPassword = await bcrypt.hash(password, 10);
+
     const createTask = await userRepository.create({
       id: randomUUID(),
       email,
       name,
-      password,
+      password: hashPassword,
     });
 
     res.status(201).json(createTask);
