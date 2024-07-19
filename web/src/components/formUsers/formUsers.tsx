@@ -18,23 +18,35 @@ export function FormTask({ user }: { user: User | undefined }) {
 
   async function handleCreate(data: UsersFormProps) {
     if (user?.id) {
-      await updateUser(user.id, data.email, data.name, data.password);
+      await updateUser(user.id, data.email, data.password, data.name);
       window.location.reload();
       return;
     }
-    await createUser(data.email, data.name, data.password);
+    await createUser(data.email, data.password, data.name);
     window.location.reload();
     return;
   }
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleCreate)}>
-      <Input placeholder="Titulo" {...register("name")} />
-      {errors.name ? <p>{errors.name.message}</p> : <p></p>}
-      <Input placeholder="Nome da tarefa" {...register("email")} />
-      {errors.email ? <p>{errors.email.message}</p> : <p></p>}
-      <Input placeholder="Nome da tarefa" {...register("password")} />
-      {errors.password ? <p>{errors.password.message}</p> : <p></p>}
+      <Input placeholder="Nome" {...register("name")} />
+      {errors.name ? (
+        <p className="text-red-500">{errors.name.message}</p>
+      ) : (
+        <p></p>
+      )}
+      <Input placeholder="Email" type="email" {...register("email")} />
+      {errors.email ? (
+        <p className="text-red-500">{errors.email.message}</p>
+      ) : (
+        <p></p>
+      )}
+      <Input placeholder="Senha" {...register("password")} />
+      {errors.password ? (
+        <p className="text-red-500">{errors.password.message}</p>
+      ) : (
+        <p></p>
+      )}
       <Button type="submit">Enviar</Button>
     </form>
   );
